@@ -1,6 +1,41 @@
-<form class="form">
-    <mat-form-field class="book-full-width">
-        <mat-label>Book title</mat-label>
-        <input matInput (ngModel) = "bookTitle" (focusout) = "sendBookTitle()">
-    </mat-form-field>
+<form class="container">
+    <mat-card class="mat-card-form-field">
+        <mat-form-field class="book-full-width" color="primary">
+            <mat-label>Book title</mat-label>
+            <input matInput type="text" (keyup)="searchBookByTitle()" [(ngModel)]="bookTitle" name='title'>
+        </mat-form-field>
+    </mat-card>
+    <mat-card class="mat-card-form-field">
+        <mat-form-field class="book-full-width" color="primary">
+            <mat-label>Author name</mat-label>
+            <input matInput type="text" (keyup)="searchBookByAuthor()" [(ngModel)]="nameAuthor" name='author'>
+        </mat-form-field>
+    </mat-card>
+    <mat-card class="mat-card-form-field">
+        <mat-form-field class="book-full-width" color="primary">
+            <mat-label>Publisher</mat-label>
+            <input matInput type="text" (keyup)="searchBookByPublisher()" [(ngModel)]="publisher" name='publisher'>
+        </mat-form-field>
+    </mat-card>
 </form>
+<article *ngIf="booksResults != null">
+    <mat-grid-list cols="3">
+        <mat-grid-tile *ngFor="let result of booksResults">
+            <div class="book-display">
+            <div class="image">
+                <img *ngIf="result.volumeInfo.imageLinks" src="{{ result.volumeInfo.imageLinks.thumbnail }}" alt="" />
+            </div>
+            <div *ngFor="let aut of result.volumeInfo.authors">
+                <span> Authors: {{ aut }}</span>
+            </div>
+            <div class="title">
+                <span>Title: {{ result.volumeInfo.title }}</span> <br />
+                <br />
+            </div>
+            <div class="description" >
+             Description: {{result.volumeInfo.description | slice:0:100 }}
+            </div>
+        </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</article>

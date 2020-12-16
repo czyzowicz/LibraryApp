@@ -6,21 +6,34 @@ import { AppComponent } from './app.component';
 import {MatInputModule} from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { BookComponent } from './book/book.component';
+import { HeaderComponent } from './header/header.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { HttpClientModule } from '@angular/common/http';
+import { BookService } from './service/book.service';
+import {MatCardModule} from '@angular/material/card';
+import { FooterComponent } from './footer/footer.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    BookComponent
+    BookComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatToolbarModule,
+    HttpClientModule,
+    MatCardModule,
+    MatGridListModule
   ],
-  providers: [],
+  providers: [BookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
