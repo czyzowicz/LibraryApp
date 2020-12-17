@@ -11,7 +11,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 import { BookService } from './service/book.service';
 import {MatCardModule} from '@angular/material/card';
-import { FooterComponent } from './footer/footer.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -23,7 +22,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     AppComponent,
     BookComponent,
     HeaderComponent,
-    FooterComponent,
   ],
   imports: [
     BrowserModule,

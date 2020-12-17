@@ -16,32 +16,38 @@
 .book-display {
   min-height: 300px;
   font-size: 20px;
-    border: 1px solid rgb(15, 15, 15);
-    margin-left: 30vw;
-    margin-top: 20px;
-    padding: 10px;
-    box-shadow: 0 6px 6px #e6e6e6;
-    width: 35vw;
+  border: 1px solid rgb(15, 15, 15);
+  margin-left: 30vw;
+  margin-top: 20px;
+  padding: 10px;
+  box-shadow: 0 6px 6px #e6e6e6;
+  width: 35vw;
 }
 .image {
     max-width: 40%;
     margin: auto;
+    float: left;
 }
 
 .title {
-    margin-right: 100px;
+    margin-left: 150px;
     color: rgb(0, 110, 255);
     font-size: 20px;
 }
 
-.description {
-    overflow: hidden;
+.author {
     font-size: 20px;
+    margin-left: 150px;
 }
 
-.show {
-    overflow: visible;
-    height: auto;
+.authors-p {
+    font-size: 20px;
+    margin-left: 150px;
+}
+
+.description {
+    margin-top: 100px;
+    font-size: 15px;
 }
 
 .spinner {

@@ -11,6 +11,7 @@ export class BookService {
   titleSubject$: BehaviorSubject<string> = new BehaviorSubject('');
   authorSubject$: BehaviorSubject<string> = new BehaviorSubject('');
   publisherSubject$: BehaviorSubject<string> = new BehaviorSubject('');
+  loadingDataSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   booksResultsSubject$: Subject<any> = new Subject();
   startIndex = 0;
 
@@ -36,6 +37,7 @@ export class BookService {
   public handle(): void {
     const url = this.buildUrl();
     if (url) {
+      this.loadingDataSubject$.next(true);
       this.search(url).subscribe((res: any) => {
         this.booksResultsSubject$.next(res);
       });

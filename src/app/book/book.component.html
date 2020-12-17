@@ -1,3 +1,7 @@
+<div infiniteScroll 
+[infiniteScrollDistance]="2" 
+[infiniteScrollThrottle]="1000"
+(scrolled)="onScroll()">
 <form class="container">
     <mat-card class="mat-card-form-field">
         <mat-form-field class="book-full-width" color="primary">
@@ -18,20 +22,21 @@
         </mat-form-field>
     </mat-card>
 </form>
-<article *ngIf="booksResults != null" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000"
-    (scrolled)="onScroll()">
+<article *ngIf="booksResults !== null"
+>
     <ng-container *ngIf="ifLoadingData === true; else elseTemplate">
         <mat-spinner class="spinner"></mat-spinner>
     </ng-container>
     <ng-template #elseTemplate>
+        <div>
         <div *ngFor="let result of booksResults">
                 <div class="book-display">
                     <div class="image">
                         <img *ngIf="result.volumeInfo.imageLinks" src="{{ result.volumeInfo.imageLinks.thumbnail }}"
                             alt="" />
                     </div>
-                    Authors:
-                    <div *ngFor="let aut of result.volumeInfo.authors">
+                    <p class="authors-p">Authors:</p>
+                    <div class="author" *ngFor="let aut of result.volumeInfo.authors">
                         <span> {{ aut }}</span>
                     </div>
                     <div class="title">
@@ -43,5 +48,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </ng-template>
 </article>
+</div>

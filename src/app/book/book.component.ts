@@ -18,6 +18,7 @@ export class BookComponent implements OnInit {
   titleSubject$: BehaviorSubject<string>;
   authorSubject$: BehaviorSubject<string>;
   publisherSubject$: BehaviorSubject<string>;
+  loadingDataSubject$: BehaviorSubject<boolean>;
 
   constructor(
     private bookService: BookService
@@ -26,27 +27,29 @@ export class BookComponent implements OnInit {
     this.authorSubject$ = this.bookService.authorSubject$;
     this.publisherSubject$ = this.bookService.publisherSubject$;
     this.booksResultsSubject$ = this.bookService.booksResultsSubject$;
+    this.loadingDataSubject$ = this.bookService.loadingDataSubject$
 
     this.booksResultsSubject$.subscribe((res: any) => {
       this.booksResults = this.booksResults.concat(res.items);
-      this.ifLoadingData = false;
+      this.loadingDataSubject$.next(false);
+    });
+    
+    this.loadingDataSubject$.subscribe((res: any) => {
+      this.ifLoadingData = res;
     });
 
   }
 
   public onKeyUpTitle(): void {
     this.titleSubject$.next(this.bookTitle);
-    this.ifLoadingData = true;
   }
 
   public onKeyUpAuthor(): void {
     this.authorSubject$.next(this.nameAuthor);
-    this.ifLoadingData = true;
   }
 
   public onKeyUpPublisher(): void {
     this.publisherSubject$.next(this.publisher);
-    this.ifLoadingData = true;
   }
 
   ngOnInit(): void {
