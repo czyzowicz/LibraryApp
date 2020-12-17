@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../service/book.service';
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 
 @Component({
   selector: 'app-book',
@@ -11,62 +12,48 @@ export class BookComponent implements OnInit {
   bookTitle: string;
   nameAuthor: string;
   publisher: string;
-  booksResults: [];
+  ifLoadingData: boolean;
+  booksResults: any[] = [];
+  booksResultsSubject$: Subject<any>;
+  titleSubject$: BehaviorSubject<string>;
+  authorSubject$: BehaviorSubject<string>;
+  publisherSubject$: BehaviorSubject<string>;
 
-  constructor(private bookService: BookService) { }
+  constructor(
+    private bookService: BookService
+  ) {
+    this.titleSubject$ = this.bookService.titleSubject$;
+    this.authorSubject$ = this.bookService.authorSubject$;
+    this.publisherSubject$ = this.bookService.publisherSubject$;
+    this.booksResultsSubject$ = this.bookService.booksResultsSubject$;
 
-  searchBookByTitle() {
-    let wordSearch = this.bookTitle;
-    setTimeout(() => {
-      if (wordSearch == this.bookTitle) {
-        if (this.bookTitle) {
-          this.bookService.getBooksByTitle(this.bookTitle)
-            .subscribe(data => {
-              this.booksResults = data.items, 
-                console.log(this.booksResults);
-            })
-        } else {
-          console.log('nothing happened');
-        }
-      }
-    }, 2000);
-  }  
-  
-  searchBookByAuthor() {
-    let wordSearch = this.nameAuthor;
-    setTimeout(() => {
-      if (wordSearch == this.nameAuthor) {
-        if (this.nameAuthor) {
-          this.bookService.getBooksByAuthor(this.nameAuthor)
-            .subscribe(data => {
-              this.booksResults = data.items, 
-                console.log(this.booksResults);
-            })
-        } else {
-          console.log('nothing happened');
-        }
-      }
-    }, 2000);
-  } 
-  
-  searchBookByPublisher() {
-    let wordSearch = this.publisher;
-    setTimeout(() => {
-      if (wordSearch == this.publisher) {
-        if (this.publisher) {
-          this.bookService.getBooksByPublisher(this.publisher)
-            .subscribe(data => {
-              this.booksResults = data.items, 
-                console.log(this.booksResults);
-            })
-        } else {
-          console.log('nothing happened');
-        }
-      }
-    }, 2000);
+    this.booksResultsSubject$.subscribe((res: any) => {
+      this.booksResults = this.booksResults.concat(res.items);
+      this.ifLoadingData = false;
+    });
+
+  }
+
+  public onKeyUpTitle(): void {
+    this.titleSubject$.next(this.bookTitle);
+    this.ifLoadingData = true;
+  }
+
+  public onKeyUpAuthor(): void {
+    this.authorSubject$.next(this.nameAuthor);
+    this.ifLoadingData = true;
+  }
+
+  public onKeyUpPublisher(): void {
+    this.publisherSubject$.next(this.publisher);
+    this.ifLoadingData = true;
   }
 
   ngOnInit(): void {
+  }
+
+  public onScroll(): void {
+    this.bookService.handle();
   }
 
 }

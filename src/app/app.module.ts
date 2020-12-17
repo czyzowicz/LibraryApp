@@ -13,6 +13,9 @@ import { BookService } from './service/book.service';
 import {MatCardModule} from '@angular/material/card';
 import { FooterComponent } from './footer/footer.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 
 @NgModule({
@@ -31,7 +34,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatToolbarModule,
     HttpClientModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    InfiniteScrollModule,
+    MatProgressSpinnerModule
   ],
   providers: [BookService],
   bootstrap: [AppComponent]
