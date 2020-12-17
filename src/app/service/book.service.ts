@@ -17,24 +17,36 @@ export class BookService {
 
 
   constructor(private http: HttpClient) {
-    this.titleSubject$.pipe(
-      debounceTime(2000)
-    ).subscribe((val) => {
-      this.handle();
-    });
-    this.authorSubject$.pipe(
-      debounceTime(2000)
-    ).subscribe((val) => {
-      this.handle();
-    });
-    this.publisherSubject$.pipe(
-      debounceTime(2000)
-    ).subscribe((val) => {
-      this.handle();
-    });
+    this.titleDebounceTime();
+    this.authorDebounceTime();
+    this.publisherDebounceTime();    
   }
 
-  public handle(): void {
+titleDebounceTime() {
+  this.titleSubject$.pipe(
+    debounceTime(2000)
+  ).subscribe((val) => {
+    this.handle();
+  });
+}
+
+authorDebounceTime() {
+  this.authorSubject$.pipe(
+    debounceTime(2000)
+  ).subscribe((val) => {
+    this.handle();
+  });
+}
+
+publisherDebounceTime() {
+  this.publisherSubject$.pipe(
+    debounceTime(2000)
+  ).subscribe((val) => {
+    this.handle();
+  });
+}
+
+   handle(): void {
     const url = this.buildUrl();
     if (url) {
       if (this.startIndex === 0) {
@@ -46,7 +58,7 @@ export class BookService {
     }
   }
 
-  public search(url: string): Observable<any> {
+   search(url: string): Observable<any> {
     return this.http.get<any>(
       `https://www.googleapis.com/books/v1/volumes?q=${url}&startIntex=${this.startIndex}&maxResults=40`
     ).pipe(
@@ -57,7 +69,7 @@ export class BookService {
     );
   }
 
-  public buildUrl(): string {
+   buildUrl(): string {
     const criteria = [];
     if (this.titleSubject$.value) {
       criteria.push(`intitle:${this.titleSubject$.value}`);
