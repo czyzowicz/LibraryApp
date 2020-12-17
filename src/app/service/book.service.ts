@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {BehaviorSubject, Observable, Subject, throwError} from 'rxjs';
-import {catchError, debounce, debounceTime, map, tap, throttle, throttleTime} from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
+import { catchError, debounce, debounceTime, map, tap, throttle, throttleTime } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class BookService {
     this.authorSubject$.pipe(
       debounceTime(2000)
     ).subscribe((val) => {
-       this.handle();
+      this.handle();
     });
     this.publisherSubject$.pipe(
       debounceTime(2000)
@@ -37,7 +37,9 @@ export class BookService {
   public handle(): void {
     const url = this.buildUrl();
     if (url) {
-      this.loadingDataSubject$.next(true);
+      if (this.startIndex === 0) {
+        this.loadingDataSubject$.next(true);
+      }
       this.search(url).subscribe((res: any) => {
         this.booksResultsSubject$.next(res);
       });
@@ -55,7 +57,7 @@ export class BookService {
     );
   }
 
-  private buildUrl(): string {
+  public buildUrl(): string {
     const criteria = [];
     if (this.titleSubject$.value) {
       criteria.push(`intitle:${this.titleSubject$.value}`);
